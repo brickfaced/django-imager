@@ -15,6 +15,6 @@ Python 3.6.4 Django venv
 None at this time
 
 ### Change log
-02:45 - create model test, installed multiselectfield, install factory-boy, update requirements.txt 
-03:30 - changed all setting s to come form env, added models.py, created app imager_profile 
-04:20 - create django app, added readme and requirements.txt, set up env
+02:45 - created registration and signin forms, installed django-registration, update requirements.txt 
+03:30 - changed all setting s to come form env, added models.py and chengeded  urls , created app django-registration 
+04:20 - added readme and requirements and tests
