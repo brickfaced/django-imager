@@ -8,6 +8,8 @@
 tsconfig.json
 jsconfig.json
 
+MEDIA/
+
 ### Django ###
 *.log
 *.pot

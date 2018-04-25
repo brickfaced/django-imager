@@ -16,6 +16,7 @@ parso==0.2.0
 pep8==1.7.1
 pexpect==4.5.0
 pickleshare==0.7.4
+Pillow==5.1.0
 prompt-toolkit==1.0.15
 psycopg2-binary==2.7.4
 ptyprocess==0.5.2
@@ -26,6 +27,7 @@ python-dateutil==2.7.2
 pytz==2018.4
 simplegeneric==0.8.1
 six==1.11.0
+sorl-thumbnail==12.4.1
 text-unidecode==1.2
 traitlets==4.3.2
 wcwidth==0.1.7
