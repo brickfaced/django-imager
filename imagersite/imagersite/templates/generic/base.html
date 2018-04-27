@@ -20,8 +20,8 @@
       <ul>
         <li><a href="{% url "home" %}">Home</a></li>
         {% if user.is_authenticated %}
-        <li><a href="">Profile</a></li>
-        <li><a href="">Pictures</a></li>
+        <li><a href="{% url "profile" %}">Profile</a></li>
+        <li><a href="{% url "photos" %}">Pictures</a></li>
         <li><a href="{% url "auth_logout" %}">Logout</a></li>
         {% else %}
         <li><a href="{% url "registration_register" %}">Signup</a></li>

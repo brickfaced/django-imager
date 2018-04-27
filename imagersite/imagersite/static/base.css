@@ -76,3 +76,8 @@ body {
   input:valid, textarea:valid {
     border-color: #89CB8E;
   }
+  .library {
+    width: 300px;
+    height: 300px;
+
+  }
