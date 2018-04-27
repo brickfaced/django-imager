@@ -1,6 +1,13 @@
 from django.shortcuts import render
+from imager_images.models import Photo
 
 
 def home_view(request):
-    return render(request, 'generic/home.html', {'message': 'Hey this is our website', 
-                                                    'image': 'http://via.placeholder.com/350x300'})
+    photos = Photo.objects.all().filter(published='PUBLIC')
+    context = {
+        'photos': photos
+    }
+    if photos:
+        return render(request, 'generic/home.html', context)
+    new = 'sdfsdfsdf'
+    return render(request, 'generic/home.html', {'message': new})
