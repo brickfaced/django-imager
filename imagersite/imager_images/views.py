@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Photo
+from .models import Photo, Album
 
 
 def photos_view(request):
@@ -8,7 +8,15 @@ def photos_view(request):
         'photos': photo
     }
     if photos:
-        return render(request, 'generic/home.html', photos)
+        return render(request, 'imager_images/images.html', photos)
+
+
+def albums_view(request):
+    album = Album.objects.all().filter(published='PUBLIC')
+    albums = {
+        'albums': album
+    }
+    return render(request, 'imager_images/album.html', albums)
 
 
 

@@ -1,0 +1,12 @@
+{% extends 'generic/base.html' %}
+{% load thumbnail %}
+
+{% block  %}
+
+{% if almubs %}
+{{almubs}}
+{% for album in albums %}
+<a href="album.cover.url"><img class="library" src="{{photo.image.url}}"></a>
+{% endfor %}
+
+{% endblock  %}
