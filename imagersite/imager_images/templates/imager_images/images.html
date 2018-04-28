@@ -1,15 +1,15 @@
 {% extends 'generic/base.html' %}
 {% load thumbnail %}
+
 {% block content %}
-<h2>Welcome to the home page!</h2>
-<p>{{ message }}</p>
+
 {% if photos %}
 {% for photo in photos %}
 {% thumbnail photo.image "300x300" as image %}
-<img src="{{image.url}}" alt="">
+<a href="{% url "single_photo" photo_id={{photo}} %}" ><img class="library" src="{{photo.image.url}}"></a>
 {% endthumbnail %}
 {% endfor %}
-{% else %}
 
 {% endif %}
-{% endblock %}
+
+{% endblock content %}
