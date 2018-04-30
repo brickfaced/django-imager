@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Photo, Album
+from .models import Photo, Album, User
 from imager_profile.models import ImagerProfile
+from django.urls import reverse
 
 
 def photos_view(request):
@@ -9,7 +10,7 @@ def photos_view(request):
         'photos': photo
     }
     if photos:
-        return render(request, 'imager_images/images.html', photos)
+        return render(request, 'imager_images/photos.html', photos)
 
 
 def albums_view(request):
@@ -17,7 +18,7 @@ def albums_view(request):
     albums = {
         'albums': album
     }
-    return render(request, 'imager_images/album.html', albums)
+    return render(request, 'imager_images/albums.html', albums)
 
 
 def library_view(request, username=None):
@@ -47,29 +48,58 @@ def library_view(request, username=None):
 
 
 def photo_view(request, photo_id=None):
-    owner = False
-    import pdb; pdb.set_trace()
-    if not username:
-        username = request.user.get_username()
-        owner = True
-        if username == '':
-            return redirect('home')
+    if photo_id:
+        photo = get_object_or_404(Photo, id=photo_id)
+        context = {
+            'photo': {'thumb': photo, 'link': reverse('photo', args=[photo.id])}
+        }
+        return render(request, 'imager_images/photo.html', context)
+    username = request.user.get_username()
+    owner = True
+    if username == '':
+        return redirect('home')
 
-    profile = get_object_or_404(ImagerProfile, user__username=username)
-    album = Album.objects.filter(user__username=username)
-    photos = Photo.objects.filter(album__user__username=username)
-
-    if not owner:
-        photos = Photo.objects.filter(published='PUBLIC')
-        album = Album.objects.filter(published='PUBLIC')
+    profile = get_object_or_404(User, username=username)
+    albums = Album.objects.filter(published='PUBLIC')
+    photos = Photo.objects.filter(published='PUBLIC')
 
     context = {
         'profile': profile,
-        'album': album,
-        'photos': photos
+        'albums': [{'cover': album.cover, 'link': reverse('album',
+                    args=[album.id])} for album in albums],
+        'photos': [{'thumb': photo, 'link': reverse('photo', args=[photo.id])} for photo in photos]
     }
+    return render(request, 'imager_images/photo.html', context)
 
-    return render(request, 'imager_images/library.html', context)
+
+def _album_with_cover(photos, cover):
+    if cover is not None:
+        return set(photos) | {cover}
+    return photos
+
+
+def album_view(request, album_id=None):
+    """Album View."""
+    username = request.user.get_username()
+    owner = True
+    if username == '':
+        return redirect('home')
+
+    profile = get_object_or_404(User, username=username)
+    albums = Album.objects.filter(published='PUBLIC')
+    photos = Photo.objects.filter(published='PUBLIC')
+
+    context = {
+        'profile': profile,
+        'albums': albums,
+        'photos': photos,
+    }
+    if album_id:
+        album = get_object_or_404(Album, id=album_id)
+        context["photos"] = _album_with_cover(Photo.objects.filter(album__id=album.id).filter(published='PUBLIC'), album.cover)
+        context["album"] = album
+        return render(request, 'imager_images/album.html', context)
+    return render(request, 'imager_images/album.html', context)
 
 
 
