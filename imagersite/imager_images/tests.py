@@ -12,6 +12,16 @@ choices2 = (('DSLR', 'Digital Single Lens Reflex'),
                                        ('SLR', 'Single Lens Reflex'))
 choices1 = [('PRIVATE', 'Private'), ('SHARED', 'Shared'), ('PUBLIC', 'Public')]
 
+def fake(user):
+    user.profile.bio = factory.Faker('text').generate({})
+    user.profile.phone = factory.Faker('phone_number').generate({})
+    user.profile.location = factory.Faker('street_address').generate({})
+    user.profile.website = factory.Faker('uri').generate({})
+    user.profile.fee = factory.Faker('pyint').generate({})
+    user.profile.is_active = factory.Faker('pybool').generate({})
+    user.profile.camera = choice(choices)
+    user.profile.save()
+    return user
 
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -19,19 +29,6 @@ class UserFactory(factory.django.DjangoModelFactory):
 
     username = factory.Faker('user_name')
     email = factory.Faker('email')
-
-
-class ProfileFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = ImagerProfile
-    
-    bio = factory.Faker('text')
-    phone = factory.Faker('phone_number')
-    location = factory.Faker('street_address')
-    website = factory.Faker('uri')
-    fee = factory.Faker('pyint')
-    is_active = factory.Faker('pybool')
-    camera = choice(choices2)
 
 
 class AlbomFactory(factory.django.DjangoModelFactory):
@@ -65,9 +62,7 @@ class PhotoUnitTests(TestCase):
             user = UserFactory.create()
             user.set_password(factory.Faker('password'))
             user.save()
-
-            profile = ProfileFactory.create(user=user)
-            profile.save()                      
+            fake(user)       
 
             album = AlbomFactory.create(user=user)
             album.save()

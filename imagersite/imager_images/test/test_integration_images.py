@@ -3,7 +3,6 @@ from imager_profile.models import User
 from ..models import Album, Photo
 from model_mommy import mommy
 import tempfile
-import factory
 
 
 class TestStoreRoutes(TestCase):
@@ -30,7 +29,7 @@ class TestStoreRoutes(TestCase):
         """test status from library"""
         user = User.objects.first()
         self.client.force_login(user)
-        response = self.client.get('/library/')
+        response = self.client.get('library')
         self.client.logout()
         self.assertEqual(response.status_code, 200)
 
