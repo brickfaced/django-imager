@@ -12,6 +12,7 @@ choices2 = (('DSLR', 'Digital Single Lens Reflex'),
                                        ('SLR', 'Single Lens Reflex'))
 choices1 = [('PRIVATE', 'Private'), ('SHARED', 'Shared'), ('PUBLIC', 'Public')]
 
+
 def fake(user):
     user.profile.bio = factory.Faker('text').generate({})
     user.profile.phone = factory.Faker('phone_number').generate({})
@@ -22,6 +23,7 @@ def fake(user):
     user.profile.camera = choice(choices)
     user.profile.save()
     return user
+
 
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
