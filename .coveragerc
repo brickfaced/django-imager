@@ -1,9 +1,5 @@
 [run]
 branch = True
-<<<<<<< HEAD
-
-=======
->>>>>>> b1ee4b16a9bf8594dc99810d3f0c8c7225f095b5
 omit =
     */ENV/*
     */migrations/*
@@ -15,14 +11,7 @@ omit =
     */tests.py
     */manage.py
     */wsgi.py
-<<<<<<< HEAD
-
 source =
     shopper
-
-=======
-source =
-    shopper
->>>>>>> b1ee4b16a9bf8594dc99810d3f0c8c7225f095b5
 [report]
 show_missing = True
