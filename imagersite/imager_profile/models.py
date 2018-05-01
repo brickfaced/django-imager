@@ -8,7 +8,7 @@ from multiselectfield import MultiSelectField
 
 class ImagerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    bio = models.TextField(blank=True, null=True, default='monkeyman')
+    bio = models.TextField(blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
     location = models.CharField(max_length=180, blank=True, null=True)
     website = models.URLField(max_length=180, blank=True, null=True)

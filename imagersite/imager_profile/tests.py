@@ -21,19 +21,16 @@ class UserFactory(factory.django.DjangoModelFactory):
     username = factory.Faker('user_name')
     email = factory.Faker('email')
 
-
-class ProfileFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = ImagerProfile
-    
-    bio = 'bio'
-    phone = factory.Faker('phone_number')
-    location = factory.Faker('street_address')
-    website = factory.Faker('uri')
-    fee = factory.Faker('pyint')
-    is_active = factory.Faker('pybool')
-    camera = choice(choices)
-
+def fake(user):
+    user.profile.bio = factory.Faker('text').generate({})
+    user.profile.phone = factory.Faker('phone_number').generate({})
+    user.profile.location = factory.Faker('street_address').generate({})
+    user.profile.website = factory.Faker('uri').generate({})
+    user.profile.fee = factory.Faker('pyint').generate({})
+    user.profile.is_active = factory.Faker('pybool').generate({})
+    user.profile.camera = choice(choices)
+    user.profile.save()
+    return user
 
 class ProfileUnitTests(TestCase):
     @classmethod
@@ -43,6 +40,7 @@ class ProfileUnitTests(TestCase):
             user = UserFactory.create()
             user.set_password(factory.Faker('password'))
             user.save()
+            fake(user)
             
     def setUpUser(self):
         self.user = UserFactory.create(user_name='codefellows')
@@ -60,7 +58,6 @@ class ProfileUnitTests(TestCase):
         self.assertIsNotNone(one_user.profile)
 
     def test_imager_profile(self):
-        import pdb; pdb.set_trace()
         """test if imagerprof hase bio"""
         self.assertIsNotNone(ImagerProfile.bio)
    
