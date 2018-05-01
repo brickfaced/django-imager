@@ -5,6 +5,7 @@ from model_mommy import mommy
 import tempfile
 import factory
 from random import choice
+from django.urls import reverse_lazy
 
 choices = (('PRIVATE', 'Private'), ('SHARED', 'Shared'), ('PUBLIC', 'Public'),)
 
@@ -27,7 +28,7 @@ class TestStoreRoutes(TestCase):
             user.profile.camera = choice(choices)
             user.profile.save()
             album = mommy.make(Album, user=user)
-            mommy.make(Photo, album=album, image=tempfile.NamedTemporaryFile(suffix='.png').name)
+            photo = mommy.make(Photo, album=album, image=tempfile.NamedTemporaryFile(suffix='.png').name)
     
     @classmethod
     def tearDownClass(cls):
@@ -59,3 +60,19 @@ class TestStoreRoutes(TestCase):
         response = self.client.get('/images/albums')
         self.client.logout()
         self.assertEqual(response.status_code, 200)
+
+    def test_200_status_on_authenticated_request_to_photo(self):
+        user = User.objects.first()
+        self.photo = Photo.objects.first()
+        self.client.force_login(user)
+        response = self.client.get(reverse_lazy('single_photo', args=[self.photo.id]))
+        self.client.logout()
+        self.assertEqual(response.status_code, 200)
+
+    def test_404_status_on_authenticated_request_to_photo(self):
+        user = User.objects.first()
+        self.photo = Photo.objects.first()
+        self.client.force_login(user)
+        response = self.client.get(reverse_lazy('single_photo', args=[1000]))
+        self.client.logout()
+        self.assertEqual(response.status_code, 404)

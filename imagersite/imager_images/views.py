@@ -52,7 +52,7 @@ def photo_view(request, photo_id=None):
     if photo_id:
         photo = get_object_or_404(Photo, id=photo_id)
         context = {
-            'photo': {'thumb': photo, 'link': reverse('photo', args=[photo.id])}
+            'photo': {'thumb': photo, 'link': reverse('photos')}
         }
         return render(request, 'imager_images/photo.html', context)
     username = request.user.get_username()
@@ -68,7 +68,7 @@ def photo_view(request, photo_id=None):
         'profile': profile,
         'albums': [{'cover': album.cover, 'link': reverse('album',
                     args=[album.id])} for album in albums],
-        'photos': [{'thumb': photo, 'link': reverse('photo', args=[photo.id])} for photo in photos]
+        'photos': [{'thumb': photo, 'link': reverse('photos', args=[photo.id])} for photo in photos]
     }
     return render(request, 'imager_images/photo.html', context)
 
@@ -101,6 +101,3 @@ def album_view(request, album_id=None):
         context["album"] = album
         return render(request, 'imager_images/album.html', context)
     return render(request, 'imager_images/album.html', context)
-
-
-

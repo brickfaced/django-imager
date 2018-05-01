@@ -7,7 +7,7 @@
     {% for photo in photos %}
     <li>
         {% thumbnail photo.thumb.image "250x250" as im %}
-        <a href="{{photo.link}}"><img src="{{ im.url }}"></a>
+        <a href="{{ photos.url }}"><img src="{{ im.url }}"></a>
         {% endthumbnail %}
         </li>
     {% endfor %}
