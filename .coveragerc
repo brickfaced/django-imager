@@ -11,6 +11,6 @@ omit =
     */manage.py
     */wsgi.py
 source =
-    shopper
+    imagersite
 [report]
 show_missing = True
