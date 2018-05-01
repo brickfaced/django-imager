@@ -5,6 +5,7 @@ from django.urls import reverse
 
 
 def photos_view(request):
+    
     photo = Photo.objects.all().filter(published='PUBLIC')
     photos = {
         'photos': photo

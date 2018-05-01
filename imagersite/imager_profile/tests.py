@@ -26,7 +26,7 @@ class ProfileFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = ImagerProfile
     
-    bio = factory.Faker('text')
+    bio = 'bio'
     phone = factory.Faker('phone_number')
     location = factory.Faker('street_address')
     website = factory.Faker('uri')
@@ -43,9 +43,6 @@ class ProfileUnitTests(TestCase):
             user = UserFactory.create()
             user.set_password(factory.Faker('password'))
             user.save()
-
-            profile = ProfileFactory.create(user=user)
-            profile.save()
             
     def setUpUser(self):
         self.user = UserFactory.create(user_name='codefellows')
@@ -63,6 +60,7 @@ class ProfileUnitTests(TestCase):
         self.assertIsNotNone(one_user.profile)
 
     def test_imager_profile(self):
+        import pdb; pdb.set_trace()
         """test if imagerprof hase bio"""
         self.assertIsNotNone(ImagerProfile.bio)
    
@@ -91,5 +89,6 @@ class ProfileUnitTests(TestCase):
         self.assertIn(instance.camera, choices1)
 
     def test_number_of_records(self):
+        """test quantity of osers"""
         number = User.objects.all()
         self.assertEqual(len(number), 50)

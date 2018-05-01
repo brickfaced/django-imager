@@ -16,26 +16,27 @@
 </head>
 <body>
   <header>
-    <nav>
-      <ul>
-        <li><a href="{% url "home" %}">Home</a></li>
-        {% if user.is_authenticated %}
-        <li><a href="{% url "profile" %}">Profile</a></li>
-        <li><a href="{% url "photos" %}">Pictures</a></li>
-        <li><a href="{% url "library" %}">Library</a></li>
-        <li><a href="{% url "albums" %}">Albums</a></li>
-        <li><a href="{% url "auth_logout" %}">Logout</a></li>
-        {% else %}
-        <li><a href="{% url "registration_register" %}">Signup</a></li>
-        <li><a href="{% url "auth_login" %}">Signin</a></li>
-        {% endif %}
-      </ul>
-    </nav>
-    {% if user.is_authenticated %}
-    <h3>Hey there {{ user.username }}</h3>
-    {% endif %}
+  
   </header>
   <main>
+      <nav>
+          <ul>
+            <li><a href="{% url "home" %}">Home</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url "profile" %}">Profile</a></li>
+            <li><a href="{% url "photos" %}">Pictures</a></li>
+            <li><a href="{% url "library" %}">Library</a></li>
+            <li><a href="{% url "albums" %}">Albums</a></li>
+            <li><a href="{% url "auth_logout" %}">Logout</a></li>
+            {% else %}
+            <li><a href="{% url "registration_register" %}">Signup</a></li>
+            <li><a href="{% url "auth_login" %}">Signin</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+        {% if user.is_authenticated %}
+        <h3>Hey there {{ user.username }}</h3>
+        {% endif %}
     {% block content %}
     <h3>No Content</h3>
     {% endblock content%}
