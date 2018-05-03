@@ -37,9 +37,11 @@
         {% if user.is_authenticated %}
         <h3>Hey there {{ user.username }}</h3>
         {% endif %}
+        <div class="midle">   
     {% block content %}
     <h3>No Content</h3>
     {% endblock content%}
+    <div>
   </main>
   <footer>
 

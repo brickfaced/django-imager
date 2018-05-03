@@ -1,12 +1,12 @@
 *{
-  background: #29506D
+  background: rgb(217, 222, 226);
 }
 body {
     line-height: 1.5;
     font-size: 100%;
-    color: #313131;
-  }
-  
+    color: cornsilk
+    width: 960px;
+  }  
   main {
     margin: 0 20px;
   }
@@ -68,16 +68,9 @@ body {
     border: 1px solid #ccc;
     border-radius: 0;
   }
-  
-  input:invalid, textarea:invalid {
-    border-color: #AE3F3C;
-  }
-  
-  input:valid, textarea:valid {
-    border-color: #89CB8E;
-  }
-  .library {
-    width: 300px;
-    height: 300px;
 
+  .midle {
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
   }
