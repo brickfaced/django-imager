@@ -1,9 +1,11 @@
 from django.urls import path
-from .views import photos_view
+from .views import photos_view, albums_view, library_view, photo_view, album_view
 
 
 urlpatterns = [
     path('photos', photos_view, name='photos'),
-    # path('photos/<str:title>', photo_view, name='photo'),
-    # path('settings/<str:title>', home_view, name='settings')  # The view is not correct here. You need to define settings_view
+    path('albums', albums_view, name='albums'),
+    path('library', library_view, name='library'),
+    path('photos/<photo_id>', photo_view, name='single_photo'),
+    path('albums/<str:album_id>', album_view, name='album'),
 ]

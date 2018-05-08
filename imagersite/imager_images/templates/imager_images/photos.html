@@ -1,0 +1,16 @@
+{% extends "generic/base.html" %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block content %}
+<ul>
+    {% for photo in photos %}
+    <li>
+        {% thumbnail photo.thumb.image "250x250" as im %}
+        <a href="{{ photos.url }}"><img src="{{ im.url }}"></a>
+        {% endthumbnail %}
+        </li>
+    {% endfor %}
+    </ul>
+    
+{% endblock content %}

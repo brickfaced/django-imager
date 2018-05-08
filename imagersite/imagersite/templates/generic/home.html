@@ -5,11 +5,11 @@
 <p>{{ message }}</p>
 {% if photos %}
 {% for photo in photos %}
-<img src="{{photo.image.url}}" alt="">
+{% thumbnail photo.image "300x300" as image %}
+<img src="{{image.url}}" alt="">
+{% endthumbnail %}
 {% endfor %}
 {% else %}
-<img src="http://via.placeholder.com/400x200" alt="">
-<img src="http://via.placeholder.com/150x200" alt="">
-<img src="http://via.placeholder.com/150x200" alt="">
+
 {% endif %}
 {% endblock %}

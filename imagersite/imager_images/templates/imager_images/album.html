@@ -1,0 +1,24 @@
+{% extends "generic/base.html" %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block content %}
+
+{% thumbnail album.cover.image "250x250" as im %}
+        <a href="{% url 'photo' album.cover.id %}"><img src="{{ im.url }}"></a>
+    {% endthumbnail %}
+</div>
+
+    <div class="col-xs-12">
+        {% for photo in photos %}
+        <div class="col-xs-6 col-md-4"></div>
+            {% thumbnail photo.image "250x250" as im %}
+            <a href="{% url 'photo' photo.id %}"><img src="{{ im.url }}"></a>
+            {% endthumbnail %}
+        </div>
+        
+        {% endfor %}
+    </div>
+    
+    
+{% endblock content %}
