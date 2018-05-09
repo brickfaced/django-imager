@@ -1,29 +1,36 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
+from django.views.generic import ListView
 from imager_images.models import Photo, Album
 from .models import ImagerProfile
 
 
-def profile_view(request, username=None):
-    owner = False
+class ProfileView(ListView):
+    template_name = 'imager_profile/user.html'
+    context_object_name = 'profile'
 
-    if not username:
-        username = request.user.get_username()
-        owner = True
-        if username == '':
+    def get(self, *args, **kwargs):
+        if not self.request.user.get_username():
             return redirect('home')
+        self.username = self.request.user.get_username()
+        
+        return super().get(*args, **kwargs)
 
-    profile = get_object_or_404(ImagerProfile, user__username=username)
-    album = Album.objects.filter(user__username=username)
-    photos = Photo.objects.filter(album__user__username=username)
+    def get_queryset(self):
+        if self.username:
+            profile = get_object_or_404(ImagerProfile, user__username=self.username)
+            album = Album.objects.filter(user__username=self.username)
+            photos = Photo.objects.filter(album__user__username=self.username)
+            context = {'profile': profile, 'album': album, 'photos': photos}
 
-    if not owner:
-        photos = Photo.objects.filter(published='PUBLIC')
-        album = Album.objects.filter(published='PUBLIC')
-
-    context = {
-        'profile': profile,
-        'album': album,
-        'photos': photos
-    }
-
-    return render(request, 'imager_profile/user.html', context)
+        else:
+            photos = Photo.objects.filter(published='PUBLIC')
+            album = Album.objects.filter(published='PUBLIC')
+            context = {
+                'album': album,
+                'photos': photos
+                }
+        return context
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
