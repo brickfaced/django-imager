@@ -5,11 +5,9 @@
 {% block content %}
 <ul>
     {% for photo in photos %}
-    <li>
-        {% thumbnail photo.thumb.image "250x250" as im %}
-        <a href="{{ photos.url }}"><img src="{{ im.url }}"></a>
+        {% thumbnail photo.image "250x250" as im %}
+        <a href="{{ photos.id}}"><img src="{{im.url}}"></a>
         {% endthumbnail %}
-        </li>
     {% endfor %}
     </ul>
     

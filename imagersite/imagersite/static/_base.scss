@@ -1,20 +1,22 @@
 *{
-  background: #29506D
+  background: rgb(217, 222, 226);
 }
+
 body {
     line-height: 1.5;
     font-size: 100%;
-    color: #313131;
-  }
+    color: cornsilk;
+    width: 960px;
+  }  
+
+main {
+  margin: 0 20px;
+}
   
-  main {
-    margin: 0 20px;
-  }
-  
-  hr {
-    margin: 1em;
-    width: 80%;
-  }
+hr {
+  margin: 1em;
+  width: 80%;
+}
   
   /*TEXT STYLES
   =======================================*/
@@ -38,9 +40,6 @@ body {
     color: #29506D;
   }
   
-  a:visited {
-  }
-  
   /*FORM STYLES
   =======================================*/
   label {
@@ -48,7 +47,6 @@ body {
   }
   
   input {
-    /* width: 100%; */
     margin: .5em 0;
     border: 1px solid #ccc;
     border-width: 0 0 1px 0;
@@ -68,16 +66,9 @@ body {
     border: 1px solid #ccc;
     border-radius: 0;
   }
-  
-  input:invalid, textarea:invalid {
-    border-color: #AE3F3C;
-  }
-  
-  input:valid, textarea:valid {
-    border-color: #89CB8E;
-  }
-  .library {
-    width: 300px;
-    height: 300px;
 
+  .midle {
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
   }
