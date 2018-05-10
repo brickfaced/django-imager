@@ -18,7 +18,6 @@ class PhotosView(TemplateView):
             return context
 
 
-
 class AlbumsView(TemplateView):
     template_name = 'imager_images/albums.html'
 
@@ -52,6 +51,7 @@ class LibraryView(TemplateView):
             'photos': photos,
             }
         return context
+
 
 class PhotoView(DetailView):
     template_name = 'imager_images/photo.html'

@@ -15,8 +15,8 @@
   <h2>You're viewing the profile for {{ profile.user.username }}</h2>
   <p>{% trans "Last Login" %}: {{ profile.user.last_login }}</p>
   <p>{% trans "Member Since" %}: {{ profile.user.date_joined }}</p>
-
- 
+  {% comment %} <a href="{% url "settings" %}">EditProfile</a> {% endcomment %}
+  <a href="{% url "settings" username=user.username %}">{% trans "Edit Profile" %}</a>
 </section>
 {% else %}
 <h1>{% trans "Please log into the site" %}</h1>
