@@ -6,7 +6,7 @@
 <ul>
     {% for photo in photos %}
         {% thumbnail photo.image "250x250" as im %}
-        <a href="{{ photos.id}}"><img src="{{im.url}}"></a>
+        <a href="{% url 'single_photo' photo.id %}"><img src="{{im.url}}"></a>
         {% endthumbnail %}
     {% endfor %}
     </ul>
