@@ -3,36 +3,20 @@
 {% load i18n %}
 
 {% block content %}
-{% if user.is_authenticated %}
+<h2>Photos<h2
+{% for photo in photos %}
+{% thumbnail photo.image "250x250" as im %}
+<a href="{{ photos.url }}"><img src="{{im.url}}"></a>
+{% endthumbnail %}
+{% endfor %}
+{% comment %} {% endif %} {% endcomment %}
 
-<section class="profile-container container">
-  {% if user.first_name %}
-  <h3>{% trans "Welcome" %}, {{ user.first_name }}</h3>
-  {% else %}
-  <h3>{% trans "Welcome" %} {{ user.username }}</h3>
-  {% endif %}
-
-  <h2>You're viewing the library of {{ profile.user.username }}</h2>
-  
-        {% if photos %}
-        {% for photo in photos %}
-        <img src="{{photo.image.url}}" class="library" alt="">
-        {% endfor %}
-        {% endif %}
-    
-  
-        {% if album %}
-        {% for item in album %}
-        <div class="library">
-            <h3>{{item.title}}</h3>
-            <img class="library" src="{{item.cover.url}}" alt="">
-        </div>
-        {% endfor %}
-        {% endif %}
-
-</section>
-
-{% else %}
-<h1>{% trans "Please log into the site" %}</h1>
-{% endif %}
+<h2>Albums</h2>
+{% comment %} {% if albums %} {% endcomment %}
+{% for album in albums %}
+{% thumbnail album.cover.image "250x250" as im %}
+<a href="{{album.link}}"><img src="{{ im.url }}"></a>
+{% endthumbnail %}
+{% endfor %}
+{% comment %} {% endif %} {% endcomment %}
 {% endblock content %}

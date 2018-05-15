@@ -1,60 +1,83 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Photo, Album, User
 from imager_profile.models import ImagerProfile
+from django.views.generic import TemplateView
+from django.views.generic.detail import DetailView
 from django.urls import reverse
 
 
-def photos_view(request):
-    
-    photo = Photo.objects.all().filter(published='PUBLIC')
-    photos = {
-        'photos': photo
-    }
-    if photos:
-        return render(request, 'imager_images/photos.html', photos)
+class PhotosView(TemplateView):
+    template_name = 'imager_images/photos.html'
+
+    def get_context_data(self, **kwargs):
+        # import pdb; pdb.set_trace()
+        context = super().get_context_data(**kwargs)
+        photos = Photo.objects.all().filter(published='PUBLIC')
+        if photos.count():
+            context = {'photos': photos}
+            return context
 
 
-def albums_view(request):
-    album = Album.objects.all().filter(published='PUBLIC')
-    albums = {
-        'albums': album
-    }
-    return render(request, 'imager_images/albums.html', albums)
+
+class AlbumsView(TemplateView):
+    template_name = 'imager_images/albums.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        albums = Album.objects.all().filter(published='PUBLIC')
+        if albums.count():
+            context = {
+                'albums': albums
+                }
+            return context
 
 
-def library_view(request, username=None):
-    owner = False
+class LibraryView(TemplateView):
+    template_name = 'imager_images/library.html'
+    context_object_name = 'library'
 
-    if not username:
-        username = request.user.get_username()
-        owner = True
-        if username == '':
+    def get(self, *args, **kwargs):
+        """something here"""
+        if not self.request.user.get_username():
             return redirect('home')
+        self.username = self.request.user.get_username()
+        return super().get(*args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        """query all allbums"""
+        photos = Photo.objects.all().filter(published='PUBLIC')
+        albums = Album.objects.all().filter(published='PUBLIC')
+        context = {
+            'albums': albums,
+            'photos': photos,
+            }
+        return context
 
-    profile = get_object_or_404(ImagerProfile, user__username=username)
-    album = Album.objects.filter(user__username=username)
-    photos = Photo.objects.filter(album__user__username=username)
+class PhotoView(DetailView):
+    template_name = 'imager_images/photo.html'
+    context_object_name = 'single_photo'
 
-    if not owner:
-        photos = Photo.objects.filter(published='PUBLIC')
-        album = Album.objects.filter(published='PUBLIC')
+    def get(self, *args, **kwargs):
+        """something here"""
+        if not self.request.user.get_username():
+            return redirect('home')
+        self.username = self.request.user.get_username()
+        return super().get(*args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        if self.kwargs[id]:
+            photo_id = self.kwargs[id]
+            photo = get_object_or_404(Photo, id=photo_id)
+            context = {
+                'photo': {'thumb': photo, 'link': reverse('photos')}
+                }
+        return context
 
-    context = {
-        'profile': profile,
-        'album': album,
-        'photos': photos
-    }
 
-    return render(request, 'imager_images/library.html', context)
 
 
 def photo_view(request, photo_id=None):
-    if photo_id:
-        photo = get_object_or_404(Photo, id=photo_id)
-        context = {
-            'photo': {'thumb': photo, 'link': reverse('photos')}
-        }
-        return render(request, 'imager_images/photo.html', context)
+    
     username = request.user.get_username()
     owner = True
     if username == '':
