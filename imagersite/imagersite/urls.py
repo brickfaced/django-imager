@@ -26,4 +26,5 @@ urlpatterns = [
     path('/', include('imager_profile.urls')),
     path('', HomeView.as_view(), name='home'),
     path('accounts/', include('registration.backends.hmac.urls')),
+    path('api/v1/', include('imager_api.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
