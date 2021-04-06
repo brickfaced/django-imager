@@ -9,7 +9,7 @@ Django==2.0.4
 django-appconf==1.0.2
 django-compressor==2.2
 django-multiselectfield==0.1.8
-django-registration==2.4.1
+django-registration==3.1.2
 django-sass-processor==0.7
 factory-boy==2.10.0
 Faker==0.8.13
